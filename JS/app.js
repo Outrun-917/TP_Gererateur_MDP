@@ -10,6 +10,12 @@ const $includeLowerCase = document.querySelector("#lowercase");
 const $includeNumbers = document.querySelector("#numbers");
 const $includeSymbols = document.querySelector("#symbols");
 
+// Strength indicators
+const $tooWeakIndicator = document.querySelector(".indicator-1")
+const $weakIndicator = document.querySelector(".indicator-2")
+const $mediumIndicator = document.querySelector(".indicator-3")
+const $strongIndicator = document.querySelector(".indicator-4")
+
 // Strength
 const $strengthText = document.querySelector(".strength-indicator");
 
@@ -34,16 +40,8 @@ function generatePassword(length) {
   const numbers = "1234567890";
   const symbols = " !#$%&'()*+,-./:;<=>?@[]^_`{|}~";
 
-  console.log($includeUpperCase);
-
-  console.log("UpperCaseOn", UpperCaseOn);
-  console.log("LowerCaseOn", LowerCaseOn);
-  console.log("NumbersOn", NumbersOn);
-  console.log("SymbolsOn", SymbolsOn);
-
   checkboxLevel = 0;
   parameters = "";
-  console.log(checkboxLevel);
 
   if (UpperCaseOn) {
     parameters += uppercaseCharacters;
@@ -62,7 +60,6 @@ function generatePassword(length) {
     checkboxLevel++;
   }
 
-  console.log(checkboxLevel);
   // console.log(parameters);
 
   let counter = 0;
@@ -85,9 +82,36 @@ function generatePassword(length) {
 // Password strength
 function passwordStrength() {
   if (currentLength <= 5 || checkboxLevel <= 1) {
-    $strengthText.textContent = "Low";
+    $strengthText.textContent = "Too weak";
+
+    $tooWeakIndicator.classList.add("indicator-too-weak")
+    $weakIndicator.classList.remove("indicator-weak")
+    $mediumIndicator.classList.remove("indicator-medium")
+    $strongIndicator.classList.remove("indicator-strong")
+
   } else if (currentLength <= 10 || checkboxLevel <= 2) {
-    $strengthText.textContent = "Medium";
+    $strengthText.textContent = "Weak";
+    
+    $tooWeakIndicator.classList.add("indicator-too-weak")
+    $weakIndicator.classList.add("indicator-weak")
+    $mediumIndicator.classList.remove("indicator-medium")
+    $strongIndicator.classList.remove("indicator-strong")
+
+  } else if (currentLength <= 15 || checkboxLevel <= 3) {
+    $strengthText.textContent = "Medium"
+    
+    $tooWeakIndicator.classList.add("indicator-too-weak")
+    $weakIndicator.classList.add("indicator-weak")
+    $mediumIndicator.classList.add("indicator-medium")
+    $strongIndicator.classList.remove("indicator-strong")
+
+  } else if (currentLength > 15 || checkboxLevel > 3) {
+    $strengthText.textContent = "Strong"
+
+    $tooWeakIndicator.classList.add("indicator-too-weak")
+    $weakIndicator.classList.add("indicator-weak")
+    $mediumIndicator.classList.add("indicator-medium")
+    $strongIndicator.classList.add("indicator-strong")
   }
 }
 
@@ -97,7 +121,6 @@ $includeUpperCase.addEventListener("change", function () {
 });
 
 $includeLowerCase.addEventListener("change", function () {
-  console.log("====");
   LowerCaseOn = this.checked;
 });
 
