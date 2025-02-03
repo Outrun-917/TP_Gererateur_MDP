@@ -9,10 +9,6 @@
     --topaz: #817D92;
 }
 
-.hidden {
-    display: none !important;
-}
-
 body {
     align-items: center;
     background-color: var(--cinder);
